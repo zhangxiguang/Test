@@ -321,12 +321,12 @@ public class shop {
 								}
 							}
 						} else {
-							System.err.println("输入错误,您重新输入，如果想返回上一层请按1，退出程序请按2");
+							System.err.println("输入错误,您重新输入，如果想返回上一层请按8，退出程序请按9");
 							pd = sc.nextInt();
-							if (pd == 1) {
+							if (pd == 8) {
 								shop();
 								break;
-							} else if (pd == 2) {
+							} else if (pd == 9) {
 								System.exit(0);
 								break;
 							}
@@ -1029,9 +1029,11 @@ public class shop {
 		int num = 0;
 		System.out.println("下面将输出所有商品信息（以录入顺序）");
 		for (int i = 0; i < a; i++) {
-			System.out.println("商品名称:" + shopmz[i] + "商品编号:" + shopbh[i] + "商品价格:" + shopjg[i] + "商品数量:" + shopsl[i]
-					+ "商品公司:" + shopgs[i]);
-			num++;
+			if(shopmz[i]!=null) {
+				System.out.println("商品名称:" + shopmz[i] + "商品编号:" + shopbh[i] + "商品价格:" + shopjg[i] + "商品数量:" + shopsl[i]
+						+ "商品公司:" + shopgs[i]);
+				num++;
+			}
 		}
 		System.out.println("共计" + num + "条信息已经全部输出。");
 		System.out.println("如果想返回上一层，请按1，如果想退出程序，请按2");
