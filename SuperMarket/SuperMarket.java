@@ -1,8 +1,9 @@
-package com.oracle.shop;
+package SuperMarket;
 
+import java.util.Random;
 import java.util.Scanner;
 
-public class shop {
+public class SuperMarket {
 	static String adminname = "admin";
 	static String adminpsd = "123";
 	static int err = 0; // 错误次数
@@ -21,6 +22,12 @@ public class shop {
 	static int[] shopjg = new int[1000]; // 定义商品价格数组
 	static int[] shopsl = new int[1000]; // 定义商品数量数组
 	static String[] shopgs = new String[1000];// 定义商品公司数组
+
+	static int yemian = 0; // 页面总数
+	static int yemian2 = 0; // 当前页面数
+	static int yemian2s = 0; // 当前页面数(用于输出页面)
+	static int number = 0; // 当前页输出信息个数
+	static String[][] page = new String[yemian][10];
 
 	static String[] usermz = new String[1000];// 定义用户信息数组
 	static String[] userbh = new String[1000];// 定义用户信息数组
@@ -216,56 +223,110 @@ public class shop {
 	}
 
 	public static void addshop() { // 添加商品
-		System.out.println("请输入以下信息：");
-		System.out.println("1.商品名称     2.商品编号    3.商品价格    4.商品数量    5.商品产地 ");
-		System.out.println("1.商品名称：");
+		System.out.println("请选择：1、单次录入、2.随机添加");
 		Scanner sc = new Scanner(System.in);
-		String name = sc.next();
-		shopmz[a] = name;
-		a++;
-		System.out.println("2.商品编号：");
-		int bh = sc.nextInt();
-		shopbh[b] = bh;
-		b++;
-		System.out.println("3.商品价格：");
-		int jg = sc.nextInt();
-		shopjg[c] = jg;
-		c++;
-		System.out.println("4.商品数量：");
-		int sl = sc.nextInt();
-		shopsl[d] = sl;
-		d++;
-		System.out.println("5.商品公司：");
-		String gs = sc.next();
-		shopgs[e] = gs;
-		e++;
-		System.out.println("输入成功，请问是否返回? ");
-		System.out.println("确定返回请按1，  继续输入请按2, 退出程序请按3");
-		int pd = sc.nextInt();
-		boolean flag = true;
-		while (flag == true) {
-			if (pd == 1) {
-				shop();
-				flag = false;
-			} else if (pd == 2) {
-				addshop();
-				flag = false;
-			} else if (pd == 3) {
-				System.exit(0);
-				flag = false;
-			} else {
-				System.err.println("输入错误,重新输入，如果想返回上一层请按6，退出程序请按7");
-				pd = sc.nextInt();
-				if (pd == 6) {
+		int num = sc.nextInt();
+		if (num == 1) {
+			System.out.println("请输入以下信息：");
+			System.out.println("1.商品名称     2.商品编号    3.商品价格    4.商品数量    5.商品产地 ");
+			System.out.println("1.商品名称：");
+			String name = sc.next();
+			shopmz[a] = name;
+			a++;
+			System.out.println("2.商品编号：");
+			int bh = sc.nextInt();
+			shopbh[b] = bh;
+			b++;
+			System.out.println("3.商品价格：");
+			int jg = sc.nextInt();
+			shopjg[c] = jg;
+			c++;
+			System.out.println("4.商品数量：");
+			int sl = sc.nextInt();
+			shopsl[d] = sl;
+			d++;
+			System.out.println("5.商品公司：");
+			String gs = sc.next();
+			shopgs[e] = gs;
+			e++;
+			System.out.println("输入成功，请问是否返回? ");
+			System.out.println("确定返回请按1，  继续输入请按2, 退出程序请按3");
+			int pd = sc.nextInt();
+			boolean flag = true;
+			while (flag == true) {
+				if (pd == 1) {
 					shop();
-					break;
-				} else if (pd == 7) {
+					flag = false;
+				} else if (pd == 2) {
+					addshop();
+					flag = false;
+				} else if (pd == 3) {
 					System.exit(0);
-					break;
+					flag = false;
+				} else {
+					System.err.println("输入错误,重新输入，如果想返回上一层请按6，退出程序请按7");
+					pd = sc.nextInt();
+					if (pd == 6) {
+						shop();
+						break;
+					} else if (pd == 7) {
+						System.exit(0);
+						break;
+					}
+					continue;
 				}
-				continue;
 			}
+		} else if (num == 2) {
+			System.out.println("请输入要添加的数量");
+			int scount = sc.nextInt();
+			String[] randommz = { "泡面", "辣条", "火腿肠", "娃哈哈奶茶", "卫龙辣条" };
+			int[] randombh = { 1, 2, 3, 11, 12, 13, 14, 22, 25 };
+			int[] randomjg = { 9, 29, 93, 191, 152, 213, 114, 222, 255 };
+			int[] randomsl = { 9, 29, 93, 191, 152, 213, 114, 222, 255 };
+			String[] randomgs = { "腾讯", "网易", "阿里", "百度", "新浪", "搜狐" };
+			for (int i = 0; i < scount; i++) {
+				Random random = new Random();
+				int randomx = random.nextInt(randommz.length);
+				shopmz[a] = randommz[randomx] + random.nextInt(99);
+				a++;
+				int randomx2 = random.nextInt(randombh.length);
+				shopbh[b] = randombh[randomx2];
+				b++;
+				int randomx3 = random.nextInt(randomjg.length);
+				shopjg[c] = randomjg[randomx3];
+				c++;
+				int randomx4 = random.nextInt(randomsl.length);
+				shopsl[d] = randomsl[randomx4];
+				d++;
+				int randomx5 = random.nextInt(randomgs.length);
+				shopgs[e] = randomgs[randomx5] + random.nextInt(99);
+				e++;
+
+			}
+			System.out.println("随机信息已经添加成功，请选择下一步操作：");
+			System.out.println("1.继续添加、2.返回上一层、3.退出系统");
+			boolean flag = true;
+			scount = sc.nextInt();
+			while (flag == true) {
+				if (scount == 1) {
+					addshop();
+					flag = false;
+				} else if (scount == 2) {
+					shop();
+					flag = false;
+				} else if (scount == 3) {
+					System.exit(0);
+					flag = false;
+				} else {
+					System.err.println("输入错误，请重新输入");
+					scount = sc.nextInt();
+				}
+			}
+
+		} else {
+			System.err.println("输入错误");
 		}
+
 	}
 
 	public static void delshop() { // 删除商品
@@ -1027,29 +1088,175 @@ public class shop {
 
 	public static void broall() { // 浏览全部商品信息
 		int num = 0;
-		System.out.println("下面将输出所有商品信息（以录入顺序）");
-		for (int i = 0; i < a; i++) {
-			if(shopmz[i]!=null) {
-				System.out.println("商品名称:" + shopmz[i] + "商品编号:" + shopbh[i] + "商品价格:" + shopjg[i] + "商品数量:" + shopsl[i]
-						+ "商品公司:" + shopgs[i]);
-				num++;
+		System.out.println("请选择显示模式：1.全部显示、2.分页显示");
+		Scanner sc = new Scanner(System.in);
+		int pd = sc.nextInt();
+		boolean flag = true;
+		if (pd == 1) { // 全部显示
+			System.out.println("下面将输出所有商品信息（以录入顺序）");
+			for (int i = 0; i < a; i++) {
+				if (shopmz[i] != null) {
+					System.out.println("商品名称:" + shopmz[i] + "商品编号:" + shopbh[i] + "商品价格:" + shopjg[i] + "商品数量:"
+							+ shopsl[i] + "商品公司:" + shopgs[i]);
+					num++;
+				}
+			}
+			System.out.println("共计" + num + "条信息已经全部输出。");
+			System.out.println("如果想返回上一层，请按1，如果想退出程序，请按2");
+			int num2 = sc.nextInt();
+
+			while (flag == true) {
+				if (num2 == 1) {
+					broshop();
+					flag = false;
+				} else if (num2 == 2) {
+					System.exit(0);
+					flag = false;
+				} else {
+					System.err.println("输入错误，请重新输入");
+					num2 = sc.nextInt();
+				}
+			}
+		} else if (pd == 2) { // 分页显示
+			int i = 0;// 信息输出个数
+			System.out.println("下面将以分页的形式显示商品信息，每页共十个。");
+			if (a % 10 == 0) {
+				yemian = a / 10;
+			} else {
+				yemian = a / 10 + 1;
+			}
+			page = new String[yemian][10];
+			if (page[0][0] == null) {
+				while (yemian2 <= yemian && i <= a && shopmz[i] != null) { // 将信息输入二维数组，用于分页显示
+					String name = "商品名称:" + shopmz[i];
+					String bianhao = "商品编号:" + shopbh[i];
+					String jiage = "商品价格:" + shopjg[i];
+					String shuliang = "商品数量:" + shopsl[i];
+					String gongsi = "商品公司:" + shopgs[i];
+					String information = name + bianhao + jiage + shuliang + gongsi;
+					if (number < 10) {
+						page[yemian2][number] = information;
+//						System.out.println(page[yemian2][number]);
+						i++;
+						number++;
+					} else {
+						number = 0;
+						yemian2++;
+					}
+				}
+				yemian2 = 0;
+				number = 0;
+				fenye();
+			} else {
+				yemian2 = 0;
+				number = 0;
+				fenye();
+			}
+
+		} else if (pd == 3) {
+			broall();
+			flag = false;
+		} else {
+			System.err.println("输入错误，请重新输入");
+		}
+	}
+
+	public static void fenye() { // 分页显示
+		while (yemian2 <= yemian) {
+			while (number < page[yemian2].length && page[yemian2][number] != null) {
+				System.out.println(page[yemian2][number]);
+				number++;
+			}
+
+			yemian2s++;
+			System.out.println("当前为第" + yemian2s + "页，共" + yemian + "页");
+			if (yemian2 == yemian - 1) {
+				yemian2 = 0;
+				number = 0;
+				yemian2s = 0;
+				System.out.println("所有信息已经输出完成，请选择下一步操作：");
+				System.out.println("返回上一层请按1，跳转页面请按2，退出系统请按3");
+				Scanner sc = new Scanner(System.in);
+				int pd2 = sc.nextInt();
+				boolean flag4 = true;
+				while (flag4 == true) {
+					if (pd2 == 1) {
+						broall();
+						flag4 = false;
+					} else if (pd2 == 2) {
+						tzpage();
+						flag4 = false;
+					} else if (pd2 == 3) {
+						System.exit(0);
+						flag4 = false;
+					} else {
+						System.err.println("输入错误，请重新输入");
+						pd2 = sc.nextInt();
+					}
+				}
+			} else {
+				System.out.println("是否继续输出，继续输出请按1，跳转页面请按2，返回上一层请按3");
+				yemian2++;
+				Scanner sc = new Scanner(System.in);
+				int pd = sc.nextInt();
+				boolean flag2 = true;
+				while (flag2 == true) {
+					if (pd == 1) {
+						number = 1;
+						fenye();
+					} else if (pd == 2) {
+						tzpage();
+						flag2 = false;
+					} else if (pd == 3) {
+						broall();
+						flag2 = false;
+					} else {
+						System.err.println("输入错误，请重新输入");
+						pd = sc.nextInt();
+					}
+				}
 			}
 		}
-		System.out.println("共计" + num + "条信息已经全部输出。");
-		System.out.println("如果想返回上一层，请按1，如果想退出程序，请按2");
+	}
+
+	public static void tzpage() {
+		System.out.println("共"+yemian+"页");
+		System.out.println("请输入要跳转的页面");
 		Scanner sc = new Scanner(System.in);
-		int num2 = sc.nextInt();
+		int pd = sc.nextInt();
 		boolean flag = true;
 		while (flag == true) {
-			if (num2 == 1) {
-				broshop();
-				flag = false;
-			} else if (num2 == 2) {
-				System.exit(0);
-				flag = false;
+			if (pd < 0 || pd > yemian) {
+				System.err.println("您输入的数字超过范围，请重新输入");
+				pd = sc.nextInt();
 			} else {
-				System.err.println("输入错误，请重新输入");
-				num2 = sc.nextInt();
+				yemian2 = pd-1;
+				for (int m = 0; m < 10; m++) {
+					if (page[yemian2][m] != null) {
+						System.out.println(page[yemian2][m]);
+					}
+				}
+				flag = false;
+				yemian2 = 0;
+				System.out.println("请选择您的下一步操作：");
+				System.out.println("1.继续跳转。2.返回上一层。3.退出系统");
+				pd = sc.nextInt();
+				boolean flag2 = true;
+				while (flag2 == true) {
+					if (pd == 1) {
+						tzpage();
+						flag2 = false;
+					} else if (pd == 2) {
+						broall();
+						flag2 = false;
+					} else if (pd == 3) {
+						System.exit(0);
+						flag2 = false;
+					} else {
+						System.err.println("输入错误，请重新输入");
+						pd = sc.nextInt();
+					}
+				}
 			}
 		}
 	}
